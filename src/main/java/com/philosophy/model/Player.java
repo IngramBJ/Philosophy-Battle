@@ -75,6 +75,12 @@ public class Player {
         return false;
     }
 
+    public void clearAction(){
+
+    this.currentAction=null;
+
+}
+
 
 
     public boolean isAlive(){

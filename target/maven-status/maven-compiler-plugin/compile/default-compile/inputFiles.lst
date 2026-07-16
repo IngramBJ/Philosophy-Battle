@@ -1,4 +1,7 @@
 /workspaces/Philosophy-Battle/src/main/java/com/philosophy/Main.java
+/workspaces/Philosophy-Battle/src/main/java/com/philosophy/engine/ActionValidator.java
+/workspaces/Philosophy-Battle/src/main/java/com/philosophy/engine/BattleEngine.java
+/workspaces/Philosophy-Battle/src/main/java/com/philosophy/engine/RoundResult.java
 /workspaces/Philosophy-Battle/src/main/java/com/philosophy/model/Action.java
 /workspaces/Philosophy-Battle/src/main/java/com/philosophy/model/ActionType.java
 /workspaces/Philosophy-Battle/src/main/java/com/philosophy/model/GameState.java

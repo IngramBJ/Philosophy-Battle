@@ -1,5 +1,10 @@
-com/philosophy/model/GameState.class
-com/philosophy/Main.class
+com/philosophy/engine/BattleEngine.class
+com/philosophy/engine/RoundResult.class
 com/philosophy/model/ActionType.class
+com/philosophy/engine/ActionValidator.class
 com/philosophy/model/Action.class
 com/philosophy/model/Player.class
+com/philosophy/engine/BattleEngine$1.class
+com/philosophy/model/GameState.class
+com/philosophy/Main.class
+com/philosophy/engine/ActionValidator$1.class
