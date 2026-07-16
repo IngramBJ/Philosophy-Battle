@@ -1,7 +1,12 @@
 /workspaces/Philosophy-Battle/src/main/java/com/philosophy/Main.java
 /workspaces/Philosophy-Battle/src/main/java/com/philosophy/engine/ActionValidator.java
 /workspaces/Philosophy-Battle/src/main/java/com/philosophy/engine/BattleEngine.java
+/workspaces/Philosophy-Battle/src/main/java/com/philosophy/engine/DefenseState.java
+/workspaces/Philosophy-Battle/src/main/java/com/philosophy/engine/RoundContext.java
 /workspaces/Philosophy-Battle/src/main/java/com/philosophy/engine/RoundResult.java
+/workspaces/Philosophy-Battle/src/main/java/com/philosophy/engine/resolver/DefenseResolver.java
+/workspaces/Philosophy-Battle/src/main/java/com/philosophy/engine/resolver/NormalAttackResolver.java
+/workspaces/Philosophy-Battle/src/main/java/com/philosophy/engine/resolver/PhilosophyResolver.java
 /workspaces/Philosophy-Battle/src/main/java/com/philosophy/model/Action.java
 /workspaces/Philosophy-Battle/src/main/java/com/philosophy/model/ActionType.java
 /workspaces/Philosophy-Battle/src/main/java/com/philosophy/model/GameState.java

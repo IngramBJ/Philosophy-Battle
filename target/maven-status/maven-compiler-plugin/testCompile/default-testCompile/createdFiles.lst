@@ -1,1 +1,5 @@
+com/philosophy/PhilosophyResolverTest.class
+com/philosophy/DefenseResolverTest.class
+com/philosophy/RoundContextTest.class
+com/philosophy/NormalAttackResolverTest.class
 com/philosophy/BattleEngineTest.class
