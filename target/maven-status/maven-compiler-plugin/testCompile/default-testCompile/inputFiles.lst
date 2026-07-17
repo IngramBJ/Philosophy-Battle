@@ -2,8 +2,11 @@
 /workspaces/Philosophy-Battle/src/test/java/com/philosophy/BattleEngineTest.java
 /workspaces/Philosophy-Battle/src/test/java/com/philosophy/DefenseResolverTest.java
 /workspaces/Philosophy-Battle/src/test/java/com/philosophy/GameRoomTest.java
+/workspaces/Philosophy-Battle/src/test/java/com/philosophy/IdlePlayerTest.java
 /workspaces/Philosophy-Battle/src/test/java/com/philosophy/NormalAttackResolverTest.java
 /workspaces/Philosophy-Battle/src/test/java/com/philosophy/PhilosophyResolverTest.java
 /workspaces/Philosophy-Battle/src/test/java/com/philosophy/ResourceTest.java
 /workspaces/Philosophy-Battle/src/test/java/com/philosophy/RoundContextTest.java
+/workspaces/Philosophy-Battle/src/test/java/com/philosophy/RoundManagerTest.java
 /workspaces/Philosophy-Battle/src/test/java/com/philosophy/SpecialAttackResolverTest.java
+/workspaces/Philosophy-Battle/src/test/java/com/philosophy/TimerServiceTest.java

@@ -4,7 +4,9 @@
 /workspaces/Philosophy-Battle/src/main/java/com/philosophy/engine/DefenseState.java
 /workspaces/Philosophy-Battle/src/main/java/com/philosophy/engine/GameRoom.java
 /workspaces/Philosophy-Battle/src/main/java/com/philosophy/engine/RoundContext.java
+/workspaces/Philosophy-Battle/src/main/java/com/philosophy/engine/RoundManager.java
 /workspaces/Philosophy-Battle/src/main/java/com/philosophy/engine/RoundResult.java
+/workspaces/Philosophy-Battle/src/main/java/com/philosophy/engine/TimerService.java
 /workspaces/Philosophy-Battle/src/main/java/com/philosophy/engine/resolver/DefenseResolver.java
 /workspaces/Philosophy-Battle/src/main/java/com/philosophy/engine/resolver/NormalAttackResolver.java
 /workspaces/Philosophy-Battle/src/main/java/com/philosophy/engine/resolver/PhilosophyResolver.java
