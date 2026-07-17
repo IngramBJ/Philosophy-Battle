@@ -4,6 +4,7 @@ package com.philosophy.controller;
 import com.philosophy.dto.JoinRoomRequest;
 import com.philosophy.engine.*;
 import com.philosophy.model.Player;
+import com.philosophy.service.GameBroadcastService;
 
 
 import org.springframework.web.bind.annotation.*;
@@ -21,12 +22,20 @@ public class PlayerController {
     private final GameRoomManager roomManager;
 
 
+    private final GameBroadcastService broadcastService;
+
+
+
 
     public PlayerController(
-            GameRoomManager roomManager
+            GameRoomManager roomManager,
+            GameBroadcastService broadcastService
     ){
 
         this.roomManager = roomManager;
+
+        this.broadcastService =
+                broadcastService;
 
     }
 
@@ -34,10 +43,14 @@ public class PlayerController {
 
 
 
+
     @PostMapping("/{roomId}/join")
     public Map<String,Object> joinRoom(
+
             @PathVariable String roomId,
+
             @RequestBody JoinRoomRequest request
+
     ){
 
 
@@ -50,10 +63,13 @@ public class PlayerController {
 
 
             return Map.of(
+
                     "success",
                     false,
+
                     "message",
                     "房间不存在"
+
             );
 
         }
@@ -61,48 +77,92 @@ public class PlayerController {
 
 
 
+
+
         Player player =
                 new Player(
+
                         request.getPlayerId(),
+
                         request.getName()
+
                 );
 
 
 
+
+
         boolean success =
-        room.addPlayer(player);
+                room.addPlayer(player);
 
 
 
-if(!success){
 
 
-    return Map.of(
-
-        "success",
-        false,
-
-        "message",
-        "无法加入房间"
-
-    );
-
-}
+        if(!success){
 
 
+            return Map.of(
 
-return Map.of(
+                    "success",
+                    false,
 
-        "success",
-        true,
+                    "message",
+                    "无法加入房间"
 
-        "playerId",
-        player.getId()
+            );
+
+        }
+
+
+
+
+
+
+
+        /*
+         * 广播玩家加入事件
+         */
+        broadcastService.broadcastEvent(
+
+        roomId,
+
+        "PLAYER_JOIN",
+
+        Map.of(
+
+                "playerId",
+                player.getId(),
+
+                "name",
+                player.getName()
+
+        )
 
 );
 
 
+
+
+
+
+
+        return Map.of(
+
+                "success",
+
+                true,
+
+
+                "playerId",
+
+                player.getId()
+
+        );
+
+
     }
+
 
 
 }

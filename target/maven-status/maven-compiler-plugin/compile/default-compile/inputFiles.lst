@@ -6,6 +6,8 @@
 /workspaces/Philosophy-Battle/src/main/java/com/philosophy/controller/GameController.java
 /workspaces/Philosophy-Battle/src/main/java/com/philosophy/controller/PlayerController.java
 /workspaces/Philosophy-Battle/src/main/java/com/philosophy/controller/RoomController.java
+/workspaces/Philosophy-Battle/src/main/java/com/philosophy/controller/RoomStateController.java
+/workspaces/Philosophy-Battle/src/main/java/com/philosophy/dto/GameEventDTO.java
 /workspaces/Philosophy-Battle/src/main/java/com/philosophy/dto/GameRoomDTO.java
 /workspaces/Philosophy-Battle/src/main/java/com/philosophy/dto/GameStateDTO.java
 /workspaces/Philosophy-Battle/src/main/java/com/philosophy/dto/JoinRoomRequest.java
@@ -30,3 +32,5 @@
 /workspaces/Philosophy-Battle/src/main/java/com/philosophy/model/Player.java
 /workspaces/Philosophy-Battle/src/main/java/com/philosophy/service/GameBroadcastService.java
 /workspaces/Philosophy-Battle/src/main/java/com/philosophy/service/PlayerSessionService.java
+/workspaces/Philosophy-Battle/src/main/java/com/philosophy/websocket/WebSocketEventListener.java
+/workspaces/Philosophy-Battle/src/main/java/com/philosophy/websocket/WebSocketHandshakeInterceptor.java

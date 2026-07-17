@@ -4,6 +4,7 @@ package com.philosophy.controller;
 import com.philosophy.engine.*;
 import com.philosophy.model.*;
 import com.philosophy.service.PlayerSessionService;
+import com.philosophy.service.GameBroadcastService;
 
 
 import org.springframework.web.bind.annotation.*;
@@ -18,27 +19,66 @@ import java.util.Map;
 public class ActionController {
 
 
+
     private final GameRoomManager roomManager;
 
 
     private final PlayerSessionService sessionService;
 
 
+    private final GameBroadcastService broadcastService;
 
 
-    public ActionController(
-            GameRoomManager roomManager,
-            PlayerSessionService sessionService
-    ){
-
-        this.roomManager =
-                roomManager;
 
 
-        this.sessionService =
-                sessionService;
 
-    }
+public ActionController(
+        GameRoomManager roomManager,
+        PlayerSessionService sessionService,
+        com.philosophy.service.GameBroadcastService broadcastService
+){
+
+    this.roomManager =
+            roomManager;
+
+
+    this.sessionService =
+            sessionService;
+
+
+    this.broadcastService =
+            broadcastService;
+
+}
+
+
+
+
+
+/**
+ * 兼容旧测试
+ *
+ * 原来的测试只传两个参数
+ */
+public ActionController(
+        GameRoomManager roomManager,
+        PlayerSessionService sessionService
+){
+
+    this.roomManager =
+            roomManager;
+
+
+    this.sessionService =
+            sessionService;
+
+
+    this.broadcastService =
+            null;
+
+}
+
+
 
 
 
@@ -65,6 +105,7 @@ public class ActionController {
 
 
 
+
         if(room==null){
 
 
@@ -84,6 +125,8 @@ public class ActionController {
 
 
 
+
+
         /*
          * 玩家身份验证
          *
@@ -91,7 +134,9 @@ public class ActionController {
          * 2. 玩家是否属于当前房间
          */
         if(!sessionService.isOnline(
+
                 String.valueOf(request.playerId)
+
         )){
 
 
@@ -105,7 +150,11 @@ public class ActionController {
 
             );
 
+
         }
+
+
+
 
 
 
@@ -129,7 +178,10 @@ public class ActionController {
 
             );
 
+
         }
+
+
 
 
 
@@ -141,16 +193,18 @@ public class ActionController {
 
 
 
-        for(Player p:
+
+        for(Player p :
                 room.getGameState()
                         .getPlayers()){
 
 
             if(p.getId()
-                    ==request.playerId){
+                    == request.playerId){
 
 
-                player=p;
+                player = p;
+
 
                 break;
 
@@ -161,20 +215,28 @@ public class ActionController {
 
 
 
+
+
         if(player==null){
 
 
             return Map.of(
 
                     "success",
+
                     false,
 
                     "message",
+
                     "玩家不存在"
 
             );
 
+
         }
+
+
+
 
 
 
@@ -187,12 +249,17 @@ public class ActionController {
                     new Action(
 
                             ActionType.valueOf(
+
                                     request.type
+
                             ),
 
                             request.targets
 
                     );
+
+
+
 
 
 
@@ -210,6 +277,43 @@ public class ActionController {
 
 
 
+
+
+            /*
+             * 广播玩家行动事件
+             */
+            if(broadcastService != null){
+
+    broadcastService.broadcastEvent(
+
+            roomId,
+
+            "ACTION_SUBMIT",
+
+            Map.of(
+
+                    "playerId",
+
+                    player.getId(),
+
+
+                    "action",
+
+                    request.type
+
+            )
+
+    );
+
+}
+
+
+
+
+
+
+
+
             return Map.of(
 
                     "success",
@@ -217,6 +321,7 @@ public class ActionController {
                     true
 
             );
+
 
 
 
@@ -243,6 +348,8 @@ public class ActionController {
 
 
     }
+
+
 
 
 

@@ -3,6 +3,7 @@ package com.philosophy.service;
 
 import com.philosophy.engine.GameRoom;
 import com.philosophy.dto.GameRoomDTO;
+import com.philosophy.dto.GameEventDTO;
 
 
 import org.springframework.messaging.simp.SimpMessagingTemplate;
@@ -246,6 +247,40 @@ public void broadcastState(
 
 
         return map.keySet();
+
+
+    }
+
+        /**
+     * 广播游戏事件
+     */
+    public void broadcastEvent(
+            String roomId,
+            String eventType,
+            Map<String,Object> data
+    ){
+
+
+        GameEventDTO event =
+                new GameEventDTO(
+
+                        eventType,
+
+                        roomId,
+
+                        data
+
+                );
+
+
+
+        broadcast(
+
+                roomId,
+
+                event
+
+        );
 
 
     }
