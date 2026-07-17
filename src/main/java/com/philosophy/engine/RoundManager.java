@@ -131,26 +131,43 @@ public RoundManager(
      */
     public RoundResult finishRound(){
 
+    if(!roundStarted){
 
-        if(!roundStarted){
+        throw new IllegalStateException(
+                "当前没有进行中的回合"
+        );
 
-
-            throw new IllegalStateException(
-                    "当前没有进行中的回合"
-            );
-
-        }
+    }
 
 
-
-        roundStarted = false;
+    roundStarted = false;
 
 
 
-        return room.nextRound();
+    RoundResult result =
+            room.nextRound();
+
+
+
+    /*
+     * 如果游戏还在进行
+     * 自动开启下一回合
+     */
+    if(room.getStatus()
+            == GameStatus.RUNNING){
+
+
+        startRound();
 
 
     }
+
+
+
+    return result;
+
+
+}
 
 
 

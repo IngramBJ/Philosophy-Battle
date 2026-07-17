@@ -3,7 +3,6 @@ package com.philosophy.engine;
 
 import com.philosophy.model.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -14,20 +13,20 @@ public class GameRoom {
     private final String roomId;
 
 
-
     private final GameState gameState;
-
 
 
     private GameStatus status;
 
 
-
     private int round;
 
 
-
     private final BattleEngine engine;
+
+
+    private RoundManager roundManager;
+
 
 
 
@@ -50,29 +49,53 @@ public class GameRoom {
         this.round = 0;
 
 
+
         this.engine =
                 new BattleEngine();
+
 
     }
 
 
 
 
-    public void addPlayer(
+
+
+    /**
+     * 玩家加入
+     */
+    public boolean addPlayer(
             Player player
     ){
 
 
         if(status != GameStatus.WAITING){
 
-            throw new IllegalStateException(
-                    "游戏已经开始"
-            );
+            return false;
 
         }
 
 
+
+        for(Player p:
+                gameState.getPlayers()){
+
+
+            if(p.getId()==player.getId()){
+
+                return false;
+
+            }
+
+        }
+
+
+
         gameState.addPlayer(player);
+
+
+        return true;
+
 
     }
 
@@ -80,10 +103,15 @@ public class GameRoom {
 
 
 
+
+    /**
+     * 开始游戏
+     */
     public void startGame(){
 
 
         if(gameState.getPlayers().size()<2){
+
 
             throw new IllegalStateException(
                     "至少需要两个玩家"
@@ -92,11 +120,25 @@ public class GameRoom {
         }
 
 
+
         status =
                 GameStatus.RUNNING;
 
 
+
         round = 1;
+
+
+
+        /*
+         * 游戏开始后创建RoundManager
+         */
+        this.roundManager =
+                new RoundManager(this);
+
+
+
+        roundManager.startRound();
 
 
     }
@@ -105,10 +147,15 @@ public class GameRoom {
 
 
 
+
+    /**
+     * 下一回合
+     */
     public RoundResult nextRound(){
 
 
         if(status != GameStatus.RUNNING){
+
 
             throw new IllegalStateException(
                     "游戏未开始"
@@ -135,7 +182,25 @@ public class GameRoom {
 
         return result;
 
+
     }
+
+
+
+
+
+
+    /**
+     * 获取当前RoundManager
+     */
+    public RoundManager getRoundManager(){
+
+
+        return roundManager;
+
+
+    }
+
 
 
 
@@ -158,8 +223,9 @@ public class GameRoom {
 
         }
 
-
     }
+
+
 
 
 
@@ -167,23 +233,48 @@ public class GameRoom {
 
     public GameState getGameState(){
 
+
         return gameState;
 
+
     }
+
+
+
 
 
 
     public GameStatus getStatus(){
 
+
         return status;
+
 
     }
 
 
 
+
+
+
     public int getRound(){
 
+
         return round;
+
+
+    }
+
+
+
+
+
+
+    public String getRoomId(){
+
+
+        return roomId;
+
 
     }
 

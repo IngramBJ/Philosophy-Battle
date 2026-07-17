@@ -1,8 +1,15 @@
 /workspaces/Philosophy-Battle/src/main/java/com/philosophy/Main.java
+/workspaces/Philosophy-Battle/src/main/java/com/philosophy/PhilosophyApplication.java
+/workspaces/Philosophy-Battle/src/main/java/com/philosophy/config/GameConfig.java
+/workspaces/Philosophy-Battle/src/main/java/com/philosophy/controller/GameController.java
+/workspaces/Philosophy-Battle/src/main/java/com/philosophy/controller/PlayerController.java
+/workspaces/Philosophy-Battle/src/main/java/com/philosophy/controller/RoomController.java
+/workspaces/Philosophy-Battle/src/main/java/com/philosophy/dto/JoinRoomRequest.java
 /workspaces/Philosophy-Battle/src/main/java/com/philosophy/engine/ActionValidator.java
 /workspaces/Philosophy-Battle/src/main/java/com/philosophy/engine/BattleEngine.java
 /workspaces/Philosophy-Battle/src/main/java/com/philosophy/engine/DefenseState.java
 /workspaces/Philosophy-Battle/src/main/java/com/philosophy/engine/GameRoom.java
+/workspaces/Philosophy-Battle/src/main/java/com/philosophy/engine/GameRoomManager.java
 /workspaces/Philosophy-Battle/src/main/java/com/philosophy/engine/RoundContext.java
 /workspaces/Philosophy-Battle/src/main/java/com/philosophy/engine/RoundManager.java
 /workspaces/Philosophy-Battle/src/main/java/com/philosophy/engine/RoundResult.java
