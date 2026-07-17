@@ -3,6 +3,7 @@ package com.philosophy.controller;
 
 import com.philosophy.engine.*;
 import com.philosophy.model.*;
+import com.philosophy.service.PlayerSessionService;
 
 
 import org.springframework.web.bind.annotation.*;
@@ -20,15 +21,26 @@ public class ActionController {
     private final GameRoomManager roomManager;
 
 
+    private final PlayerSessionService sessionService;
+
+
+
 
     public ActionController(
-            GameRoomManager roomManager
+            GameRoomManager roomManager,
+            PlayerSessionService sessionService
     ){
 
         this.roomManager =
                 roomManager;
 
+
+        this.sessionService =
+                sessionService;
+
     }
+
+
 
 
 
@@ -36,9 +48,12 @@ public class ActionController {
     @PostMapping("/{roomId}/action")
     public Map<String,Object> submitAction(
 
+
             @PathVariable String roomId,
 
+
             @RequestBody ActionRequest request
+
 
     ){
 
@@ -46,6 +61,7 @@ public class ActionController {
 
         GameRoom room =
                 roomManager.getRoom(roomId);
+
 
 
 
@@ -66,8 +82,62 @@ public class ActionController {
 
 
 
+
+
+        /*
+         * 玩家身份验证
+         *
+         * 1. 玩家是否在线
+         * 2. 玩家是否属于当前房间
+         */
+        if(!sessionService.isOnline(
+                String.valueOf(request.playerId)
+        )){
+
+
+            return Map.of(
+
+                    "success",
+                    false,
+
+                    "message",
+                    "玩家未连接"
+
+            );
+
+        }
+
+
+
+
+        if(!sessionService.inRoom(
+
+                String.valueOf(request.playerId),
+
+                roomId
+
+        )){
+
+
+            return Map.of(
+
+                    "success",
+                    false,
+
+                    "message",
+                    "玩家不属于该房间"
+
+            );
+
+        }
+
+
+
+
+
         Player player =
                 null;
+
 
 
 
@@ -90,6 +160,7 @@ public class ActionController {
 
 
 
+
         if(player==null){
 
 
@@ -108,36 +179,45 @@ public class ActionController {
 
 
 
+
         try{
 
 
             Action action =
                     new Action(
 
-                        ActionType.valueOf(
-                                request.type
-                        ),
+                            ActionType.valueOf(
+                                    request.type
+                            ),
 
-                        request.targets
+                            request.targets
 
                     );
+
 
 
 
             room.getRoundManager()
                     .submitAction(
+
                             player,
+
                             action
+
                     );
+
+
 
 
 
             return Map.of(
 
                     "success",
+
                     true
 
             );
+
 
 
 
@@ -148,9 +228,11 @@ public class ActionController {
             return Map.of(
 
                     "success",
+
                     false,
 
                     "message",
+
                     e.getMessage()
 
             );
@@ -161,6 +243,8 @@ public class ActionController {
 
 
     }
+
+
 
 
 

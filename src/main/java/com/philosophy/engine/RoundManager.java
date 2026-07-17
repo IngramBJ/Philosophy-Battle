@@ -86,6 +86,12 @@ public RoundManager(
 
     roundStarted=true;
 
+    if(broadcastService != null){
+
+    broadcastService.broadcastState(room);
+
+}
+
 
 }
 
@@ -146,6 +152,12 @@ public void submitAction(
 
     player.setCurrentAction(action);
 
+    if(broadcastService != null){
+
+    broadcastService.broadcastState(room);
+
+}
+
 
 
     /*
@@ -200,6 +212,8 @@ public RoundResult finishRound(){
                 room.getRoomId(),
                 result
         );
+
+        broadcastService.broadcastState(room);
 
 
     }

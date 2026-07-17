@@ -1,8 +1,18 @@
 package com.philosophy.service;
 
 
+import com.philosophy.engine.GameRoom;
+import com.philosophy.dto.GameRoomDTO;
+
+
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
+
+
+
+import java.util.Map;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 
 
@@ -10,7 +20,14 @@ import org.springframework.stereotype.Service;
 public class GameBroadcastService {
 
 
+
     private final SimpMessagingTemplate template;
+
+
+
+    private final Map<String,Map<Integer,String>> sessions;
+
+
 
 
 
@@ -21,24 +38,214 @@ public class GameBroadcastService {
         this.template =
                 template;
 
+
+        this.sessions =
+                new ConcurrentHashMap<>();
+
     }
 
 
 
 
+
+
+    /**
+     * 普通广播
+     */
     public void broadcast(
             String roomId,
             Object message
     ){
 
 
+        if(template == null){
+
+            return;
+
+        }
+
+
+
         template.convertAndSend(
-
                 "/topic/room/"+roomId,
-
                 message
-
         );
+
+
+    }
+
+
+
+
+
+
+
+
+    /**
+     * 广播GameRoom状态
+     *
+     * 给RoundManager使用
+     */
+public void broadcastState(
+        GameRoom room
+)
+{
+
+
+    if(room==null){
+
+        return;
+
+    }
+
+
+
+    GameRoomDTO dto =
+            new GameRoomDTO(room);
+
+
+
+    broadcast(
+
+            room.getRoomId(),
+
+            dto
+
+    );
+
+
+}
+
+
+
+
+
+
+
+    /**
+     * 原来的状态广播接口
+     */
+    public void broadcastState(
+            String roomId,
+            Object state
+    ){
+
+
+        broadcast(
+                roomId,
+                state
+        );
+
+
+    }
+
+
+
+
+
+
+
+
+
+    public void registerPlayer(
+            String roomId,
+            int playerId,
+            String sessionId
+    ){
+
+
+        sessions
+                .computeIfAbsent(
+                        roomId,
+                        k->new ConcurrentHashMap<>()
+                )
+                .put(
+                        playerId,
+                        sessionId
+                );
+
+
+    }
+
+
+
+
+
+
+
+
+    public void removePlayer(
+            String roomId,
+            int playerId
+    ){
+
+
+        Map<Integer,String> map =
+                sessions.get(roomId);
+
+
+
+        if(map!=null){
+
+            map.remove(playerId);
+
+        }
+
+
+    }
+
+
+
+
+
+
+
+    public int onlineCount(
+            String roomId
+    ){
+
+
+        Map<Integer,String> map =
+                sessions.get(roomId);
+
+
+
+        if(map==null){
+
+            return 0;
+
+        }
+
+
+        return map.size();
+
+
+    }
+
+
+
+
+
+
+
+    public Set<Integer> onlinePlayers(
+            String roomId
+    ){
+
+
+        Map<Integer,String> map =
+                sessions.get(roomId);
+
+
+
+        if(map==null){
+
+            return Set.of();
+
+        }
+
+
+        return map.keySet();
 
 
     }

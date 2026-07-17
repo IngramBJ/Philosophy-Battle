@@ -1,0 +1,72 @@
+package com.philosophy;
+
+
+import com.philosophy.dto.GameRoomDTO;
+import com.philosophy.engine.GameRoom;
+import com.philosophy.model.Player;
+
+
+import org.junit.jupiter.api.Test;
+
+
+import static org.junit.jupiter.api.Assertions.*;
+
+
+
+public class GameRoomDTOTest {
+
+
+
+    @Test
+    public void gameRoomConvertToDTO(){
+
+
+
+        GameRoom room =
+                new GameRoom(
+                        "room001"
+                );
+
+
+
+        room.addPlayer(
+                new Player(
+                        1,
+                        "Alice"
+                )
+        );
+
+
+
+        GameRoomDTO dto =
+                new GameRoomDTO(room);
+
+
+
+        assertEquals(
+                "room001",
+                dto.roomId
+        );
+
+
+
+        assertEquals(
+                1,
+                dto.state.playerCount
+        );
+
+
+
+        assertEquals(
+                "Alice",
+                dto.state.players
+                        .get(0)
+                        .name
+        );
+
+
+
+    }
+
+
+}

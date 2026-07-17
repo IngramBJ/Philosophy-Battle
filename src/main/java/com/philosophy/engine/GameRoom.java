@@ -29,6 +29,11 @@ public class GameRoom {
     private RoundManager roundManager;
 
 
+    private final GameBroadcastService broadcastService;
+
+
+
+
 
 
 /**
@@ -49,6 +54,7 @@ public GameRoom(
 
 
 
+
 /**
  * 在线环境使用
  */
@@ -60,19 +66,28 @@ public GameRoom(
     this.roomId = roomId;
 
 
+    this.broadcastService =
+            broadcastService;
+
+
+
     this.gameState =
             new GameState();
+
 
 
     this.status =
             GameStatus.WAITING;
 
 
+
     this.round = 0;
+
 
 
     this.engine =
             new BattleEngine();
+
 
 
     this.roundManager =
@@ -89,224 +104,237 @@ public GameRoom(
 
 
 
-    /**
-     * 玩家加入
-     */
-    public boolean addPlayer(
-            Player player
-    ){
+
+/**
+ * 玩家加入
+ */
+public boolean addPlayer(
+        Player player
+){
 
 
-        if(status != GameStatus.WAITING){
+    if(status != GameStatus.WAITING){
+
+        return false;
+
+    }
+
+
+
+    for(Player p:
+            gameState.getPlayers()){
+
+
+        if(p.getId()==player.getId()){
 
             return false;
 
         }
 
-
-
-        for(Player p:
-                gameState.getPlayers()){
-
-
-            if(p.getId()==player.getId()){
-
-                return false;
-
-            }
-
-        }
+    }
 
 
 
-        gameState.addPlayer(player);
+    gameState.addPlayer(player);
 
 
-        return true;
 
+    return true;
+
+
+}
+
+
+
+
+
+
+
+
+/**
+ * 开始游戏
+ */
+public void startGame(){
+
+
+    if(gameState.getPlayers().size()<2){
+
+
+        throw new IllegalStateException(
+                "至少需要两个玩家"
+        );
 
     }
 
 
 
+    status =
+            GameStatus.RUNNING;
 
 
 
-    /**
-     * 开始游戏
+    round = 1;
+
+
+
+
+    /*
+     * 保留广播能力
      */
-    public void startGame(){
-
-
-        if(gameState.getPlayers().size()<2){
-
-
-            throw new IllegalStateException(
-                    "至少需要两个玩家"
+    this.roundManager =
+            new RoundManager(
+                    this,
+                    broadcastService
             );
 
-        }
 
+
+    roundManager.startRound();
+
+
+}
+
+
+
+
+
+
+
+
+/**
+ * 下一回合
+ */
+public RoundResult nextRound(){
+
+
+    if(status != GameStatus.RUNNING){
+
+
+        throw new IllegalStateException(
+                "游戏未开始"
+        );
+
+    }
+
+
+
+    RoundResult result =
+            engine.resolveRound(
+                    gameState
+            );
+
+
+
+    round++;
+
+
+
+    checkWinner();
+
+
+
+    return result;
+
+
+}
+
+
+
+
+
+
+
+
+public RoundManager getRoundManager(){
+
+
+    return roundManager;
+
+
+}
+
+
+
+
+
+
+
+
+private void checkWinner(){
+
+
+    List<Player> alive =
+            gameState.getAlivePlayers();
+
+
+
+    if(alive.size()<=1){
 
 
         status =
-                GameStatus.RUNNING;
-
-
-
-        round = 1;
-
-
-
-        /*
-         * 游戏开始后创建RoundManager
-         */
-        this.roundManager =
-                new RoundManager(this);
-
-
-
-        roundManager.startRound();
+                GameStatus.FINISHED;
 
 
     }
 
+}
 
 
 
 
 
-    /**
-     * 下一回合
-     */
-    public RoundResult nextRound(){
 
 
-        if(status != GameStatus.RUNNING){
+public GameState getGameState(){
 
 
-            throw new IllegalStateException(
-                    "游戏未开始"
-            );
+    return gameState;
 
-        }
 
+}
 
 
-        RoundResult result =
-                engine.resolveRound(
-                        gameState
-                );
 
 
 
-        round++;
 
 
+public GameStatus getStatus(){
 
-        checkWinner();
 
+    return status;
 
 
-        return result;
+}
 
 
-    }
 
 
 
 
 
+public int getRound(){
 
-    /**
-     * 获取当前RoundManager
-     */
-    public RoundManager getRoundManager(){
 
+    return round;
 
-        return roundManager;
 
+}
 
-    }
 
 
 
 
 
 
-    private void checkWinner(){
+public String getRoomId(){
 
 
-        List<Player> alive =
-                gameState.getAlivePlayers();
+    return roomId;
 
 
+}
 
-        if(alive.size()<=1){
-
-
-            status =
-                    GameStatus.FINISHED;
-
-
-        }
-
-    }
-
-
-
-
-
-
-
-    public GameState getGameState(){
-
-
-        return gameState;
-
-
-    }
-
-
-
-
-
-
-    public GameStatus getStatus(){
-
-
-        return status;
-
-
-    }
-
-
-
-
-
-
-    public int getRound(){
-
-
-        return round;
-
-
-    }
-
-
-
-
-
-
-    public String getRoomId(){
-
-
-        return roomId;
-
-
-    }
-
-    
 
 
 }

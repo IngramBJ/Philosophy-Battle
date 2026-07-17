@@ -1,1 +1,5 @@
+com/philosophy/model/ActionCost$1.class
+com/philosophy/engine/resolver/NormalAttackResolver$1.class
 com/philosophy/Main.class
+com/philosophy/engine/resolver/DefenseResolver$1.class
+com/philosophy/engine/resolver/SpecialAttackResolver$1.class
