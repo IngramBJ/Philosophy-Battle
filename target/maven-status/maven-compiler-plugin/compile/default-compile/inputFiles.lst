@@ -1,6 +1,8 @@
 /workspaces/Philosophy-Battle/src/main/java/com/philosophy/Main.java
 /workspaces/Philosophy-Battle/src/main/java/com/philosophy/PhilosophyApplication.java
 /workspaces/Philosophy-Battle/src/main/java/com/philosophy/config/GameConfig.java
+/workspaces/Philosophy-Battle/src/main/java/com/philosophy/config/WebSocketConfig.java
+/workspaces/Philosophy-Battle/src/main/java/com/philosophy/controller/ActionController.java
 /workspaces/Philosophy-Battle/src/main/java/com/philosophy/controller/GameController.java
 /workspaces/Philosophy-Battle/src/main/java/com/philosophy/controller/PlayerController.java
 /workspaces/Philosophy-Battle/src/main/java/com/philosophy/controller/RoomController.java
@@ -24,3 +26,4 @@
 /workspaces/Philosophy-Battle/src/main/java/com/philosophy/model/GameState.java
 /workspaces/Philosophy-Battle/src/main/java/com/philosophy/model/GameStatus.java
 /workspaces/Philosophy-Battle/src/main/java/com/philosophy/model/Player.java
+/workspaces/Philosophy-Battle/src/main/java/com/philosophy/service/GameBroadcastService.java

@@ -1,3 +1,5 @@
+/workspaces/Philosophy-Battle/src/test/java/com/philosophy/ActionControllerTest.java
+/workspaces/Philosophy-Battle/src/test/java/com/philosophy/ActionSubmitTest.java
 /workspaces/Philosophy-Battle/src/test/java/com/philosophy/ActionValidatorTest.java
 /workspaces/Philosophy-Battle/src/test/java/com/philosophy/AutoNextRoundTest.java
 /workspaces/Philosophy-Battle/src/test/java/com/philosophy/BattleEngineTest.java

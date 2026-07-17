@@ -1,6 +1,9 @@
 package com.philosophy.engine;
 
 
+import com.philosophy.service.GameBroadcastService;
+
+
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
@@ -13,12 +16,54 @@ public class GameRoomManager {
     private final Map<String, GameRoom> rooms;
 
 
+    /**
+     * WebSocket广播服务
+     *
+     * 测试环境可以为空
+     */
+    private final GameBroadcastService broadcastService;
 
+
+
+
+    /**
+     * 保留原构造
+     *
+     * 给测试使用
+     */
     public GameRoomManager(){
 
 
-        rooms =
+        this.rooms =
                 new ConcurrentHashMap<>();
+
+
+        this.broadcastService =
+                null;
+
+
+    }
+
+
+
+
+
+    /**
+     * Spring使用
+     *
+     * 注入WebSocket广播
+     */
+    public GameRoomManager(
+            GameBroadcastService broadcastService
+    ){
+
+
+        this.rooms =
+                new ConcurrentHashMap<>();
+
+
+        this.broadcastService =
+                broadcastService;
 
 
     }
@@ -40,8 +85,34 @@ public class GameRoomManager {
 
 
 
-        GameRoom room =
-                new GameRoom(roomId);
+        GameRoom room;
+
+
+
+        if(broadcastService == null){
+
+
+            /*
+             * 测试环境
+             */
+            room =
+                    new GameRoom(roomId);
+
+
+        }else{
+
+
+            /*
+             * 在线游戏环境
+             */
+            room =
+                    new GameRoom(
+                            roomId,
+                            broadcastService
+                    );
+
+
+        }
 
 
 
@@ -105,13 +176,19 @@ public class GameRoomManager {
 
     }
 
+
+
+
+
     public boolean hasRoom(
-        String roomId
-){
+            String roomId
+    ){
 
-    return rooms.containsKey(roomId);
 
-}
+        return rooms.containsKey(roomId);
+
+
+    }
 
 
 }

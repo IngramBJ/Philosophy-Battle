@@ -2,6 +2,7 @@ package com.philosophy.engine;
 
 
 import com.philosophy.model.*;
+import com.philosophy.service.GameBroadcastService;
 
 import java.util.List;
 
@@ -30,31 +31,58 @@ public class GameRoom {
 
 
 
-    public GameRoom(
-            String roomId
-    ){
+/**
+ * 测试环境使用
+ */
+public GameRoom(
+        String roomId
+){
 
+    this(
+            roomId,
+            null
+    );
 
-        this.roomId = roomId;
-
-
-        this.gameState =
-                new GameState();
-
-
-        this.status =
-                GameStatus.WAITING;
-
-
-        this.round = 0;
+}
 
 
 
-        this.engine =
-                new BattleEngine();
 
 
-    }
+/**
+ * 在线环境使用
+ */
+public GameRoom(
+        String roomId,
+        GameBroadcastService broadcastService
+){
+
+    this.roomId = roomId;
+
+
+    this.gameState =
+            new GameState();
+
+
+    this.status =
+            GameStatus.WAITING;
+
+
+    this.round = 0;
+
+
+    this.engine =
+            new BattleEngine();
+
+
+    this.roundManager =
+            new RoundManager(
+                    this,
+                    broadcastService
+            );
+
+
+}
 
 
 
@@ -277,6 +305,8 @@ public class GameRoom {
 
 
     }
+
+    
 
 
 }
