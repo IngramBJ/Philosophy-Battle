@@ -208,15 +208,27 @@ public RoundResult finishRound(){
     if(broadcastService != null){
 
 
-        broadcastService.broadcast(
-                room.getRoomId(),
-                result
-        );
+    broadcastService.broadcastEvent(
 
-        broadcastService.broadcastState(room);
+            room.getRoomId(),
+
+            "ROUND_RESULT",
+
+            java.util.Map.of(
+
+                    "logs",
+
+                    result.getLogs()
+
+            )
+
+    );
 
 
-    }
+    broadcastService.broadcastState(room);
+
+
+}
 
 
 

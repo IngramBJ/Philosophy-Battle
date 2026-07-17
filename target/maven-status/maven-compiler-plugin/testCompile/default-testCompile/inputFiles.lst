@@ -2,6 +2,7 @@
 /workspaces/Philosophy-Battle/src/test/java/com/philosophy/ActionControllerTest.java
 /workspaces/Philosophy-Battle/src/test/java/com/philosophy/ActionSubmitTest.java
 /workspaces/Philosophy-Battle/src/test/java/com/philosophy/ActionValidatorTest.java
+/workspaces/Philosophy-Battle/src/test/java/com/philosophy/ActionWebSocketControllerTest.java
 /workspaces/Philosophy-Battle/src/test/java/com/philosophy/AutoNextRoundTest.java
 /workspaces/Philosophy-Battle/src/test/java/com/philosophy/BattleEngineTest.java
 /workspaces/Philosophy-Battle/src/test/java/com/philosophy/DefenseResolverTest.java
@@ -28,3 +29,4 @@
 /workspaces/Philosophy-Battle/src/test/java/com/philosophy/SpecialAttackResolverTest.java
 /workspaces/Philosophy-Battle/src/test/java/com/philosophy/TimerServiceTest.java
 /workspaces/Philosophy-Battle/src/test/java/com/philosophy/WebSocketHandshakeTest.java
+/workspaces/Philosophy-Battle/src/test/java/com/philosophy/WebSocketSessionLifecycleTest.java
