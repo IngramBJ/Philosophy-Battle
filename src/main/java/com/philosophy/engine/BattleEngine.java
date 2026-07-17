@@ -10,6 +10,7 @@ import java.util.Map;
 import com.philosophy.engine.resolver.PhilosophyResolver;
 import com.philosophy.engine.resolver.DefenseResolver;
 import com.philosophy.engine.resolver.NormalAttackResolver;
+import com.philosophy.engine.resolver.SpecialAttackResolver;
 
 
 
@@ -20,6 +21,7 @@ public class BattleEngine {
     private final PhilosophyResolver philosophyResolver;
     private final DefenseResolver defenseResolver;
     private final NormalAttackResolver normalAttackResolver;
+    private final SpecialAttackResolver specialAttackResolver;
 
 
     public BattleEngine(){
@@ -31,6 +33,8 @@ public class BattleEngine {
                     new DefenseResolver();
         normalAttackResolver =
                     new NormalAttackResolver();
+        specialAttackResolver =
+                    new SpecialAttackResolver();
     }
 
 
@@ -94,6 +98,12 @@ DefenseState defenseState =
                 context,
                 result
         );
+
+specialAttackResolver.resolve(
+        context,
+        defenseState,
+        result
+);
 
 normalAttackResolver.resolve(
         context,
@@ -168,41 +178,42 @@ normalAttackResolver.resolve(
     /**
      * 扣除技能消耗
      */
-    private void consumePoints(
-            GameState game,
-            RoundResult result
-    ){
+private void consumePoints(
+        GameState game,
+        RoundResult result
+){
 
 
-        for(Player player:
-                game.getAlivePlayers()){
-
-
-            if(player.getCurrentAction()==null){
-
-    continue;
-
-}
-
-
-ActionType type =
-        player.getCurrentAction()
-        .getType();
+    for(Player player:
+            game.getAlivePlayers()){
 
 
 
-            int cost =
-                    getCost(type);
+        Action action =
+                player.getCurrentAction();
 
 
 
-            if(cost > 0){
+        if(action == null){
+
+            continue;
+
+        }
 
 
-                player.spendPoints(cost);
+
+        int cost =
+                ActionCost.getCost(
+                        action.getType()
+                );
 
 
-            }
+
+        if(cost > 0){
+
+
+            player.spendPoints(cost);
+
 
         }
 
@@ -210,34 +221,11 @@ ActionType type =
     }
 
 
+}
 
 
 
-    private int getCost(
-            ActionType type
-    ){
 
-        return switch(type){
-
-            case MUJI -> 2;
-
-            case BILLY -> 3;
-
-            case BANANA -> 4;
-
-            case VANSAMA -> 5;
-
-            case WHITE_MOUSE -> 7;
-
-            case DEMON_KING -> 3;
-
-            case DOOR -> 1;
-
-            default -> 0;
-
-        };
-
-    }
 
 
     private void clearActions(

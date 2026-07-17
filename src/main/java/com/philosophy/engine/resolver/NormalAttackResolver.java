@@ -222,7 +222,7 @@ public class NormalAttackResolver {
 
 
         for(Player player:
-                context.getActions().keySet()){
+                 context.getAlivePlayers()){
 
 
             if(player.getId()==id){
