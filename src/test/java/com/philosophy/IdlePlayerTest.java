@@ -63,7 +63,7 @@ public class IdlePlayerTest {
 
 
         RoundManager manager =
-                room.getRoundManager();
+                new RoundManager(room);
 
 
 

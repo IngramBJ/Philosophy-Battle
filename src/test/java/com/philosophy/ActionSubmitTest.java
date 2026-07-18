@@ -70,7 +70,7 @@ public class ActionSubmitTest {
 
 
         RoundManager manager =
-                room.getRoundManager();
+                new RoundManager(room);
 
 
 

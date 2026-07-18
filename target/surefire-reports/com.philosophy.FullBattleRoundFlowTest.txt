@@ -1,17 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: com.philosophy.FullBattleRoundFlowTest
 -------------------------------------------------------------------------------
-Tests run: 1, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 18.37 s <<< FAILURE! -- in com.philosophy.FullBattleRoundFlowTest
-com.philosophy.FullBattleRoundFlowTest.fullBattleRoundFlowTest -- Time elapsed: 13.70 s <<< FAILURE!
-org.opentest4j.AssertionFailedError: expected: <true> but was: <false>
-	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:151)
-	at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:132)
-	at org.junit.jupiter.api.AssertTrue.failNotTrue(AssertTrue.java:63)
-	at org.junit.jupiter.api.AssertTrue.assertTrue(AssertTrue.java:36)
-	at org.junit.jupiter.api.AssertTrue.assertTrue(AssertTrue.java:31)
-	at org.junit.jupiter.api.Assertions.assertTrue(Assertions.java:183)
-	at com.philosophy.FullBattleRoundFlowTest.fullBattleRoundFlowTest(FullBattleRoundFlowTest.java:258)
-	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
-
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 8.385 s -- in com.philosophy.FullBattleRoundFlowTest

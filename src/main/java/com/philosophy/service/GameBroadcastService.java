@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 
+
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
@@ -21,58 +22,33 @@ import java.util.concurrent.ConcurrentHashMap;
 public class GameBroadcastService {
 
 
+
     private final SimpMessagingTemplate template;
 
 
-    private final Map<String,Map<Integer,String>> sessions;
 
+    private final Map<String,Map<Integer,String>> sessions;
 
     private final ObjectMapper mapper;
 
 
 
-    /**
-     * Spring生产环境使用
-     */
+
+
     public GameBroadcastService(
             SimpMessagingTemplate template,
             ObjectMapper mapper
     ){
 
-        this.template = template;
-
-
-        this.mapper =
-                mapper != null
-                        ? mapper
-                        : new ObjectMapper();
-
+        this.template =
+                template;
 
 
         this.sessions =
                 new ConcurrentHashMap<>();
 
-    }
-
-
-
-
-
-    /**
-     * 测试环境使用
-     */
-    public GameBroadcastService(){
-
-        this.template = null;
-
-
         this.mapper =
-                new ObjectMapper();
-
-
-
-        this.sessions =
-                new ConcurrentHashMap<>();
+                mapper;
 
     }
 
@@ -85,48 +61,33 @@ public class GameBroadcastService {
      * 普通广播
      */
     public void broadcast(
-            String roomId,
-            Object message
-    ){
+        String roomId,
+        Object message
+){
 
 
-        try{
+    try{
 
-            System.out.println(
-                    "WS SEND JSON="
-                    + mapper.writeValueAsString(message)
-            );
-
-
-        }catch(Exception e){
-
-            e.printStackTrace();
-
-        }
-
-
-
-        /*
-         * 测试环境没有WebSocket
-         * 不应该影响游戏流程
-         */
-        if(template == null){
-
-            return;
-
-        }
-
-
-
-        template.convertAndSend(
-
-                "/topic/room/"+roomId,
-
-                message
-
+        System.out.println(
+                "WS SEND JSON="
+                +mapper.writeValueAsString(message)
         );
 
+
+    }catch(Exception e){
+
+        e.printStackTrace();
+
     }
+
+
+
+    template.convertAndSend(
+            "/topic/room/"+roomId,
+            message
+    );
+
+}
 
 
 
@@ -136,35 +97,38 @@ public class GameBroadcastService {
 
     /**
      * 广播GameRoom状态
+     *
+     * 给RoundManager使用
      */
-    public void broadcastState(
-            GameRoom room
-    ){
+public void broadcastState(
+        GameRoom room
+)
+{
 
 
-        if(room == null){
+    if(room==null){
 
-            return;
-
-        }
-
-
-
-        GameRoomDTO dto =
-                new GameRoomDTO(room);
-
-
-
-        broadcast(
-
-                room.getRoomId(),
-
-                dto
-
-        );
-
+        return;
 
     }
+
+
+
+    GameRoomDTO dto =
+            new GameRoomDTO(room);
+
+
+
+    broadcast(
+
+            room.getRoomId(),
+
+            dto
+
+    );
+
+
+}
 
 
 
@@ -173,19 +137,23 @@ public class GameBroadcastService {
 
 
     /**
-     * 原状态广播接口
+     * 原来的状态广播接口
      */
     public void broadcastState(
             String roomId,
             Object state
     ){
 
+
         broadcast(
                 roomId,
                 state
         );
 
+
     }
+
+
 
 
 
@@ -203,7 +171,7 @@ public class GameBroadcastService {
         sessions
                 .computeIfAbsent(
                         roomId,
-                        k -> new ConcurrentHashMap<>()
+                        k->new ConcurrentHashMap<>()
                 )
                 .put(
                         playerId,
@@ -212,6 +180,7 @@ public class GameBroadcastService {
 
 
     }
+
 
 
 
@@ -230,14 +199,14 @@ public class GameBroadcastService {
 
 
 
-        if(map != null){
+        if(map!=null){
 
             map.remove(playerId);
 
         }
 
-    }
 
+    }
 
 
 
@@ -255,7 +224,7 @@ public class GameBroadcastService {
 
 
 
-        if(map == null){
+        if(map==null){
 
             return 0;
 
@@ -264,8 +233,8 @@ public class GameBroadcastService {
 
         return map.size();
 
-    }
 
+    }
 
 
 
@@ -283,7 +252,7 @@ public class GameBroadcastService {
 
 
 
-        if(map == null){
+        if(map==null){
 
             return Set.of();
 
@@ -295,14 +264,7 @@ public class GameBroadcastService {
 
     }
 
-
-
-
-
-
-
-
-    /**
+        /**
      * 广播游戏事件
      */
     public void broadcastEvent(
