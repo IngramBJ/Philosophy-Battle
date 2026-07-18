@@ -3,12 +3,13 @@ package com.philosophy;
 
 import com.philosophy.engine.*;
 import com.philosophy.model.*;
-
+import com.philosophy.service.GameBroadcastService;
 
 import org.junit.jupiter.api.Test;
 
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
 
 
 
@@ -18,9 +19,14 @@ public class ActionControllerTest {
     @Test
     public void playerCanSubmitAction(){
 
+        GameBroadcastService broadcastService =
+            mock(
+                GameBroadcastService.class
+            );
+
 
         GameRoom room =
-                new GameRoom("001");
+                new GameRoom("001", broadcastService);
 
 
         Player a =

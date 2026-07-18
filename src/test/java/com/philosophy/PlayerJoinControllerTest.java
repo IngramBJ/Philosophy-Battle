@@ -18,6 +18,7 @@ import java.util.Map;
 
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
 
 
 
@@ -29,9 +30,13 @@ public class PlayerJoinControllerTest {
     public void playerCanJoinRoom(){
 
 
+GameBroadcastService broadcastService =
+            mock(
+                GameBroadcastService.class
+            );
 
         GameRoomManager manager =
-                new GameRoomManager();
+                new GameRoomManager(broadcastService);
 
 
 
@@ -43,7 +48,7 @@ public class PlayerJoinControllerTest {
 
         GameBroadcastService service =
                 new GameBroadcastService(
-                        null
+                        null, null
                 );
 
 
@@ -123,16 +128,19 @@ public class PlayerJoinControllerTest {
     @Test
     public void cannotJoinMissingRoom(){
 
-
+GameBroadcastService broadcastService =
+            mock(
+                GameBroadcastService.class
+            );
 
         GameRoomManager manager =
-                new GameRoomManager();
+                new GameRoomManager(broadcastService);
 
 
 
         GameBroadcastService service =
                 new GameBroadcastService(
-                        null
+                        null, null
                 );
 
 

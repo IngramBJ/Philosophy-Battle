@@ -25,14 +25,18 @@ public class PlayerControllerTest {
 @Test
 public void joinRoomSuccess(){
 
+GameBroadcastService broadcastService =
+            mock(
+                GameBroadcastService.class
+            );
 
     GameRoomManager manager =
-            new GameRoomManager();
+            new GameRoomManager(
+                broadcastService
+            );
 
 
 
-    GameBroadcastService broadcastService =
-            mock(GameBroadcastService.class);
 
 
 

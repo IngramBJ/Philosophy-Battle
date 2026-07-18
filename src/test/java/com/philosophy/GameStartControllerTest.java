@@ -15,6 +15,7 @@ import java.util.Map;
 
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
 
 
 
@@ -26,9 +27,13 @@ public class GameStartControllerTest {
     public void startGameSuccess(){
 
 
+GameBroadcastService broadcastService =
+            mock(
+                GameBroadcastService.class
+            );
 
         GameRoomManager manager =
-                new GameRoomManager();
+                new GameRoomManager(broadcastService);
 
 
 
@@ -61,7 +66,7 @@ public class GameStartControllerTest {
                         manager,
 
                         new GameBroadcastService(
-                                null
+                                null, null
                         )
 
                 );
@@ -110,15 +115,18 @@ public class GameStartControllerTest {
     @Test
     public void startGameFailWhenRoomMissing(){
 
-
+GameBroadcastService broadcastService =
+            mock(
+                GameBroadcastService.class
+            );
 
         GameController controller =
                 new GameController(
 
-                        new GameRoomManager(),
+                        new GameRoomManager(broadcastService),
 
                         new GameBroadcastService(
-                                null
+                                null, null
                         )
 
                 );
@@ -154,11 +162,14 @@ public class GameStartControllerTest {
 
     @Test
     public void startGameFailWhenPlayersLessThanTwo(){
-
+GameBroadcastService broadcastService =
+            mock(
+                GameBroadcastService.class
+            );
 
 
         GameRoomManager manager =
-                new GameRoomManager();
+                new GameRoomManager(broadcastService);
 
 
 
@@ -186,7 +197,7 @@ public class GameStartControllerTest {
                         manager,
 
                         new GameBroadcastService(
-                                null
+                                null, null
                         )
 
                 );

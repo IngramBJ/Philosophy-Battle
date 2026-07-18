@@ -24,7 +24,7 @@ public class GameBroadcastEventTest {
 
 
         GameBroadcastService service =
-                new GameBroadcastService(null);
+                new GameBroadcastService(null, null);
 
 
 

@@ -8,6 +8,7 @@ import com.philosophy.dto.GameEventDTO;
 
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 
 
@@ -28,12 +29,15 @@ public class GameBroadcastService {
 
     private final Map<String,Map<Integer,String>> sessions;
 
+    private final ObjectMapper mapper;
+
 
 
 
 
     public GameBroadcastService(
-            SimpMessagingTemplate template
+            SimpMessagingTemplate template,
+            ObjectMapper mapper
     ){
 
         this.template =
@@ -42,6 +46,9 @@ public class GameBroadcastService {
 
         this.sessions =
                 new ConcurrentHashMap<>();
+
+        this.mapper =
+                mapper;
 
     }
 
@@ -54,27 +61,33 @@ public class GameBroadcastService {
      * 普通广播
      */
     public void broadcast(
-            String roomId,
-            Object message
-    ){
+        String roomId,
+        Object message
+){
 
 
-        if(template == null){
+    try{
 
-            return;
-
-        }
-
-
-
-        template.convertAndSend(
-                "/topic/room/"+roomId,
-                message
+        System.out.println(
+                "WS SEND JSON="
+                +mapper.writeValueAsString(message)
         );
 
 
+    }catch(Exception e){
+
+        e.printStackTrace();
+
     }
 
+
+
+    template.convertAndSend(
+            "/topic/room/"+roomId,
+            message
+    );
+
+}
 
 
 

@@ -4,11 +4,13 @@ package com.philosophy;
 import com.philosophy.controller.RoomController;
 import com.philosophy.engine.GameRoom;
 import com.philosophy.engine.GameRoomManager;
+import com.philosophy.service.GameBroadcastService;
 
 import org.junit.jupiter.api.Test;
 
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
 
 
 
@@ -19,9 +21,13 @@ public class RoomControllerTest {
     @Test
     public void createRoomSuccess(){
 
+GameBroadcastService broadcastService =
+            mock(
+                GameBroadcastService.class
+            );
 
         GameRoomManager manager =
-                new GameRoomManager();
+                new GameRoomManager(broadcastService);
 
 
 
@@ -54,9 +60,13 @@ public class RoomControllerTest {
     @Test
     public void queryStateSuccess(){
 
+        GameBroadcastService broadcastService =
+                mock(
+                        GameBroadcastService.class
+                );
 
         GameRoomManager manager =
-                new GameRoomManager();
+                new GameRoomManager(broadcastService);
 
 
 

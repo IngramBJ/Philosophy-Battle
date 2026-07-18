@@ -16,47 +16,25 @@ public class GameRoomManager {
     private final Map<String, GameRoom> rooms;
 
 
-    /**
-     * WebSocket广播服务
-     *
-     * 测试环境可以为空
-     */
     private final GameBroadcastService broadcastService;
 
 
 
-
     /**
-     * 保留原构造
-     *
-     * 给测试使用
+     * 测试环境构造
      */
-    public GameRoomManager(){
 
-
-        this.rooms =
-                new ConcurrentHashMap<>();
-
-
-        this.broadcastService =
-                null;
-
-
-    }
 
 
 
 
 
     /**
-     * Spring使用
-     *
-     * 注入WebSocket广播
+     * Spring环境构造
      */
     public GameRoomManager(
             GameBroadcastService broadcastService
     ){
-
 
         this.rooms =
                 new ConcurrentHashMap<>();
@@ -65,8 +43,9 @@ public class GameRoomManager {
         this.broadcastService =
                 broadcastService;
 
-
     }
+
+
 
 
 
@@ -85,34 +64,11 @@ public class GameRoomManager {
 
 
 
-        GameRoom room;
-
-
-
-        if(broadcastService == null){
-
-
-            /*
-             * 测试环境
-             */
-            room =
-                    new GameRoom(roomId);
-
-
-        }else{
-
-
-            /*
-             * 在线游戏环境
-             */
-            room =
-                    new GameRoom(
-                            roomId,
-                            broadcastService
-                    );
-
-
-        }
+        GameRoom room =
+                new GameRoom(
+                        roomId,
+                        broadcastService
+                );
 
 
 
@@ -131,6 +87,8 @@ public class GameRoomManager {
 
 
 
+
+
     /**
      * 获取房间
      */
@@ -138,9 +96,7 @@ public class GameRoomManager {
             String roomId
     ){
 
-
         return rooms.get(roomId);
-
 
     }
 
@@ -148,16 +104,13 @@ public class GameRoomManager {
 
 
 
-    /**
-     * 删除房间
-     */
+
+
     public void removeRoom(
             String roomId
     ){
 
-
         rooms.remove(roomId);
-
 
     }
 
@@ -165,16 +118,15 @@ public class GameRoomManager {
 
 
 
-    /**
-     * 房间数量
-     */
-    public int roomCount(){
 
+
+    public int roomCount(){
 
         return rooms.size();
 
-
     }
+
+
 
 
 
@@ -184,9 +136,7 @@ public class GameRoomManager {
             String roomId
     ){
 
-
         return rooms.containsKey(roomId);
-
 
     }
 

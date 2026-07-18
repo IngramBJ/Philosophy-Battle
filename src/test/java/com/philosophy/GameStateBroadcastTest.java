@@ -36,7 +36,7 @@ public class GameStateBroadcastTest {
 
         GameBroadcastService service =
                 new GameBroadcastService(
-                        template
+                        template, null
                 );
 
 
@@ -73,7 +73,7 @@ public class GameStateBroadcastTest {
 
         GameBroadcastService service =
                 new GameBroadcastService(
-                        null
+                        null, null
                 );
 
 

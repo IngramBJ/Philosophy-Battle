@@ -3,6 +3,7 @@ package com.philosophy;
 
 import com.philosophy.engine.*;
 import com.philosophy.model.*;
+import com.philosophy.service.GameBroadcastService;
 
 import org.junit.jupiter.api.Test;
 
@@ -11,6 +12,7 @@ import java.util.List;
 
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
 
 
 
@@ -21,13 +23,18 @@ public class ActionSubmitTest {
     @Test
     public void twoPlayersSubmitActionThenAutoFinishRound(){
 
+        GameBroadcastService broadcastService =
+            mock(
+                GameBroadcastService.class
+            );
+
 
 
         /*
          * 创建房间
          */
         GameRoom room =
-                new GameRoom("room1");
+                new GameRoom("room1", broadcastService);
 
 
 

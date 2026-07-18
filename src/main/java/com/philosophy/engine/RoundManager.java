@@ -34,6 +34,11 @@ public RoundManager(
     this.timerService =
             new TimerService();
 
+            System.out.println(
+    "CREATE ROUND MANAGER:"
+    + System.identityHashCode(this)
+);
+
 }
 
 
@@ -56,6 +61,11 @@ public RoundManager(
     this.timerService =
             new TimerService();
 
+            System.out.println(
+    "CREATE ROUND MANAGER:"
+    + System.identityHashCode(this)
+);
+
 }
 
 
@@ -66,6 +76,11 @@ public RoundManager(
      * 开始当前回合
      */
     public void startRound(){
+
+        System.out.println(
+    "START ROUND:"
+    +System.identityHashCode(this)
+);
 
 
     if(room.getStatus()
@@ -85,6 +100,11 @@ public RoundManager(
 
 
     roundStarted=true;
+
+    System.out.println(
+    "ROUND STARTED="
+    +roundStarted
+);
 
     if(broadcastService != null){
 
@@ -134,10 +154,18 @@ public RoundManager(
     /**
      * 玩家提交行动
      */
-public void submitAction(
+public synchronized void submitAction(
         Player player,
         Action action
 ){
+
+    System.out.println(
+    "SUBMIT ROUND:"
+    +System.identityHashCode(this)
+    +" STARTED="
+    +roundStarted
+);
+
 
 
     if(!roundStarted){
@@ -182,11 +210,15 @@ public void submitAction(
     /**
      * 结束回合并结算
      */
-public RoundResult finishRound(){
+public synchronized RoundResult finishRound(){
+
+
+    System.out.println(
+        "========== FINISH ROUND =========="
+    );
 
 
     if(!roundStarted){
-
 
         throw new IllegalStateException(
                 "当前没有进行中的回合"
@@ -195,17 +227,36 @@ public RoundResult finishRound(){
     }
 
 
-
     roundStarted=false;
-
 
 
     RoundResult result =
             room.nextRound();
 
 
+    System.out.println(
+        "ROUND RESULT="
+        +result
+    );
 
-    if(broadcastService != null){
+
+    if(result!=null){
+
+        System.out.println(
+            "LOGS="
+            +result.getLogs()
+        );
+
+    }
+
+
+
+if(broadcastService != null){
+
+
+    System.out.println(
+        "SEND ROUND RESULT"
+    );
 
 
     broadcastService.broadcastEvent(
@@ -216,9 +267,11 @@ public RoundResult finishRound(){
 
             java.util.Map.of(
 
-                    "logs",
+                    "round",
+                    room.getRound(),
 
-                    result.getLogs()
+                    "message",
+"ROUND_FINISHED"
 
             )
 
@@ -229,23 +282,6 @@ public RoundResult finishRound(){
 
 
 }
-
-
-
-    /*
-     * 自动开启下一回合
-     *
-     * 如果游戏还在运行
-     */
-    if(room.getStatus()
-            == GameStatus.RUNNING){
-
-
-        startRound();
-
-
-    }
-
 
 
     return result;
@@ -281,6 +317,13 @@ private boolean allPlayersSubmitted(){
     for(Player player:
             room.getGameState()
                     .getPlayers()){
+
+        System.out.println(
+            "CHECK PLAYER:"
+            +player.getId()
+            +" ACTION="
+            +player.getCurrentAction()
+        );
 
 
         if(player.isAlive()

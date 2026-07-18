@@ -4,12 +4,14 @@ package com.philosophy;
 import com.philosophy.controller.RoomStateController;
 import com.philosophy.engine.GameRoom;
 import com.philosophy.engine.GameRoomManager;
+import com.philosophy.service.GameBroadcastService;
 import com.philosophy.dto.GameStateDTO;
 
 import org.junit.jupiter.api.Test;
 
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
 
 
 
@@ -20,9 +22,13 @@ public class RoomStateControllerTest {
     @Test
     public void getStateShouldReturnDTO(){
 
+GameBroadcastService broadcastService =
+            mock(
+                GameBroadcastService.class
+            );
 
         GameRoomManager manager =
-                new GameRoomManager();
+                new GameRoomManager(broadcastService);
 
 
 
@@ -72,9 +78,13 @@ public class RoomStateControllerTest {
     @Test
     public void stateShouldFailWhenRoomNotExist(){
 
+        GameBroadcastService broadcastService =
+                mock(
+                        GameBroadcastService.class
+                );
 
         GameRoomManager manager =
-                new GameRoomManager();
+                new GameRoomManager(broadcastService);
 
 
 

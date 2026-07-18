@@ -1,11 +1,16 @@
 com/philosophy/GameStartControllerTest.class
+com/philosophy/FullBattleRoundFlowTest$1.class
 com/philosophy/NormalAttackResolverTest.class
 com/philosophy/RoomControllerTest.class
 com/philosophy/PhilosophyResolverTest.class
+com/philosophy/FullGameFlowTest.class
+com/philosophy/FullGameFlowTest$2.class
 com/philosophy/RoomStateControllerTest.class
 com/philosophy/GameBroadcastEventTest.class
 com/philosophy/ActionControllerTest.class
 com/philosophy/GameStartTest.class
+com/philosophy/FullBattleRoundFlowTest.class
+com/philosophy/FullGameFlowTest$1.class
 com/philosophy/WebSocketIntegrationTest$2.class
 com/philosophy/PlayerJoinControllerTest.class
 com/philosophy/ActionWebSocketControllerTest.class
@@ -31,6 +36,7 @@ com/philosophy/ActionValidatorTest.class
 com/philosophy/GameBroadcastServiceTest.class
 com/philosophy/SpecialAttackResolverTest.class
 com/philosophy/RoundContextTest.class
+com/philosophy/FullBattleRoundFlowTest$2.class
 com/philosophy/GameRoomDTOTest.class
 com/philosophy/TimerServiceTest.class
 com/philosophy/RoundManagerTest.class

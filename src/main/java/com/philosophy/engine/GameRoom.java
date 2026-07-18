@@ -26,7 +26,7 @@ public class GameRoom {
     private final BattleEngine engine;
 
 
-    private RoundManager roundManager;
+    private final RoundManager roundManager;
 
 
     private final GameBroadcastService broadcastService;
@@ -35,99 +35,218 @@ public class GameRoom {
 
 
 
+    public GameRoom(
+            String roomId,
+            GameBroadcastService broadcastService
+    ){
 
-/**
- * 测试环境使用
- */
-public GameRoom(
-        String roomId
-){
+        this.roomId =
+                roomId;
 
-    this(
-            roomId,
-            null
-    );
 
-}
+        this.broadcastService =
+                broadcastService;
 
 
 
+        this.gameState =
+                new GameState();
 
 
 
-/**
- * 在线环境使用
- */
-public GameRoom(
-        String roomId,
-        GameBroadcastService broadcastService
-){
-
-    this.roomId = roomId;
-
-
-    this.broadcastService =
-            broadcastService;
+        this.status =
+                GameStatus.WAITING;
 
 
 
-    this.gameState =
-            new GameState();
+        this.round =
+                0;
 
 
 
-    this.status =
-            GameStatus.WAITING;
+        this.engine =
+                new BattleEngine();
 
 
 
-    this.round = 0;
+        this.roundManager =
+                new RoundManager(
+                        this,
+                        broadcastService
+                );
 
-
-
-    this.engine =
-            new BattleEngine();
-
-
-
-    this.roundManager =
-            new RoundManager(
-                    this,
-                    broadcastService
-            );
-
-
-}
-
-
-
-
-
-
-
-/**
- * 玩家加入
- */
-public boolean addPlayer(
-        Player player
-){
-
-
-    if(status != GameStatus.WAITING){
-
-        return false;
 
     }
 
 
 
-    for(Player p:
-            gameState.getPlayers()){
 
 
-        if(p.getId()==player.getId()){
+
+
+
+
+    /**
+     * 玩家加入
+     */
+    public boolean addPlayer(
+            Player player
+    ){
+
+
+        if(status != GameStatus.WAITING){
 
             return false;
+
+        }
+
+
+
+        for(Player p:
+                gameState.getPlayers()){
+
+
+            if(p.getId()==player.getId()){
+
+                return false;
+
+            }
+
+        }
+
+
+
+        gameState.addPlayer(player);
+
+
+
+        return true;
+
+
+    }
+
+
+
+
+
+
+
+
+
+    /**
+     * 开始游戏
+     */
+    public void startGame(){
+
+
+        if(gameState.getPlayers().size()<2){
+
+            throw new IllegalStateException(
+                    "至少需要两个玩家"
+            );
+
+        }
+
+
+
+        status =
+                GameStatus.RUNNING;
+
+
+
+        round =
+                1;
+
+
+
+        roundManager.startRound();
+
+
+    }
+
+
+
+
+
+
+
+
+
+    /**
+     * 下一回合
+     */
+    public RoundResult nextRound(){
+
+
+        if(status != GameStatus.RUNNING){
+
+
+            throw new IllegalStateException(
+                    "游戏未开始"
+            );
+
+        }
+
+
+
+        RoundResult result =
+                engine.resolveRound(
+                        gameState
+                );
+
+
+
+        round++;
+
+
+
+        checkWinner();
+
+
+
+        return result;
+
+
+    }
+
+
+
+
+
+
+
+
+
+    public RoundManager getRoundManager(){
+
+
+        return roundManager;
+
+
+    }
+
+
+
+
+
+
+
+
+
+    private void checkWinner(){
+
+
+        List<Player> alive =
+                gameState.getAlivePlayers();
+
+
+
+        if(alive.size()<=1){
+
+
+            status =
+                    GameStatus.FINISHED;
+
 
         }
 
@@ -135,149 +254,52 @@ public boolean addPlayer(
 
 
 
-    gameState.addPlayer(player);
-
-
-
-    return true;
-
-
-}
 
 
 
 
 
 
+    public GameState getGameState(){
 
 
-/**
- * 开始游戏
- */
-public void startGame(){
+        return gameState;
 
-
-    if(gameState.getPlayers().size()<2){
-
-
-        throw new IllegalStateException(
-                "至少需要两个玩家"
-        );
 
     }
 
 
 
-    status =
-            GameStatus.RUNNING;
-
-
-
-    round = 1;
-
-
-
-
-    /*
-     * 保留广播能力
-     */
-    this.roundManager =
-            new RoundManager(
-                    this,
-                    broadcastService
-            );
-
-
-
-    roundManager.startRound();
-
-
-}
 
 
 
 
 
 
+    public GameStatus getStatus(){
 
 
-/**
- * 下一回合
- */
-public RoundResult nextRound(){
+        return status;
 
-
-    if(status != GameStatus.RUNNING){
-
-
-        throw new IllegalStateException(
-                "游戏未开始"
-        );
 
     }
 
 
 
-    RoundResult result =
-            engine.resolveRound(
-                    gameState
-            );
-
-
-
-    round++;
-
-
-
-    checkWinner();
-
-
-
-    return result;
-
-
-}
 
 
 
 
 
 
+    public int getRound(){
 
 
-public RoundManager getRoundManager(){
-
-
-    return roundManager;
-
-
-}
-
-
-
-
-
-
-
-
-private void checkWinner(){
-
-
-    List<Player> alive =
-            gameState.getAlivePlayers();
-
-
-
-    if(alive.size()<=1){
-
-
-        status =
-                GameStatus.FINISHED;
+        return round;
 
 
     }
 
-}
 
 
 
@@ -285,55 +307,14 @@ private void checkWinner(){
 
 
 
-public GameState getGameState(){
+
+    public String getRoomId(){
 
 
-    return gameState;
+        return roomId;
 
 
-}
-
-
-
-
-
-
-
-public GameStatus getStatus(){
-
-
-    return status;
-
-
-}
-
-
-
-
-
-
-
-public int getRound(){
-
-
-    return round;
-
-
-}
-
-
-
-
-
-
-
-public String getRoomId(){
-
-
-    return roomId;
-
-
-}
+    }
 
 
 

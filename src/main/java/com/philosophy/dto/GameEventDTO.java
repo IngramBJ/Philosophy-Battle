@@ -24,6 +24,10 @@ public class GameEventDTO {
 
     public Map<String,Object> data;
 
+    public GameEventDTO(){
+
+    }
+
 
 
 

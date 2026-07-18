@@ -5,6 +5,7 @@ import com.philosophy.controller.ActionController;
 import com.philosophy.engine.GameRoom;
 import com.philosophy.engine.GameRoomManager;
 import com.philosophy.model.Player;
+import com.philosophy.service.GameBroadcastService;
 import com.philosophy.service.PlayerSessionService;
 
 
@@ -16,6 +17,7 @@ import java.util.Map;
 
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 
 
@@ -26,10 +28,15 @@ public class ActionAuthorizationTest {
     @Test
     public void offlinePlayerCannotSubmitAction(){
 
+        GameBroadcastService broadcastService =
+            mock(
+                GameBroadcastService.class
+            );
+
 
 
         GameRoomManager manager =
-                new GameRoomManager();
+                new GameRoomManager(broadcastService);
 
 
 
@@ -148,10 +155,13 @@ public class ActionAuthorizationTest {
     @Test
     public void playerCannotActInOtherRoom(){
 
-
+GameBroadcastService broadcastService =
+            mock(
+                GameBroadcastService.class
+            );
 
         GameRoomManager manager =
-                new GameRoomManager();
+                new GameRoomManager(broadcastService);
 
 
 

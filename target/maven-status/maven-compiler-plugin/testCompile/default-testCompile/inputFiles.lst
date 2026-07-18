@@ -6,6 +6,8 @@
 /workspaces/Philosophy-Battle/src/test/java/com/philosophy/AutoNextRoundTest.java
 /workspaces/Philosophy-Battle/src/test/java/com/philosophy/BattleEngineTest.java
 /workspaces/Philosophy-Battle/src/test/java/com/philosophy/DefenseResolverTest.java
+/workspaces/Philosophy-Battle/src/test/java/com/philosophy/FullBattleRoundFlowTest.java
+/workspaces/Philosophy-Battle/src/test/java/com/philosophy/FullGameFlowTest.java
 /workspaces/Philosophy-Battle/src/test/java/com/philosophy/GameBroadcastEventTest.java
 /workspaces/Philosophy-Battle/src/test/java/com/philosophy/GameBroadcastServiceTest.java
 /workspaces/Philosophy-Battle/src/test/java/com/philosophy/GameEventDTOTest.java
