@@ -8,6 +8,7 @@ import com.philosophy.service.GameBroadcastService;
 
 
 import org.springframework.web.bind.annotation.*;
+import org.springframework.beans.factory.annotation.Autowired;
 
 
 import java.util.Map;
@@ -31,7 +32,7 @@ public class ActionController {
 
 
 
-
+@Autowired
 public ActionController(
         GameRoomManager roomManager,
         PlayerSessionService sessionService,
@@ -51,34 +52,21 @@ public ActionController(
 
 }
 
-
-
-
-
 /**
- * 兼容旧测试
- *
- * 原来的测试只传两个参数
+ * 测试兼容
  */
 public ActionController(
         GameRoomManager roomManager,
         PlayerSessionService sessionService
 ){
 
-    this.roomManager =
-            roomManager;
+    this.roomManager = roomManager;
 
+    this.sessionService = sessionService;
 
-    this.sessionService =
-            sessionService;
-
-
-    this.broadcastService =
-            null;
+    this.broadcastService = null;
 
 }
-
-
 
 
 

@@ -2,8 +2,6 @@
 /workspaces/Philosophy-Battle/src/main/java/com/philosophy/PhilosophyApplication.java
 /workspaces/Philosophy-Battle/src/main/java/com/philosophy/config/GameConfig.java
 /workspaces/Philosophy-Battle/src/main/java/com/philosophy/config/WebSocketConfig.java
-/workspaces/Philosophy-Battle/src/main/java/com/philosophy/config/WebSocketEventListener.java
-/workspaces/Philosophy-Battle/src/main/java/com/philosophy/config/WebSocketHandshakeInterceptor.java
 /workspaces/Philosophy-Battle/src/main/java/com/philosophy/controller/ActionController.java
 /workspaces/Philosophy-Battle/src/main/java/com/philosophy/controller/ActionWebSocketController.java
 /workspaces/Philosophy-Battle/src/main/java/com/philosophy/controller/GameController.java

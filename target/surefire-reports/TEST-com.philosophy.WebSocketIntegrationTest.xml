@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" version="3.0.2" name="com.philosophy.SpecialAttackResolverTest" time="0.055" tests="5" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" version="3.0.2" name="com.philosophy.WebSocketIntegrationTest" time="5.683" tests="1" errors="0" skipped="0" failures="0">
   <properties>
     <property name="java.specification.version" value="25"/>
     <property name="sun.jnu.encoding" value="UTF-8"/>
@@ -7,6 +7,7 @@
     <property name="java.vm.vendor" value="Microsoft"/>
     <property name="sun.arch.data.model" value="64"/>
     <property name="java.vendor.url" value="https://www.microsoft.com"/>
+    <property name="catalina.useNaming" value="false"/>
     <property name="user.timezone" value="Etc/UTC"/>
     <property name="os.name" value="Linux"/>
     <property name="java.vm.specification.version" value="25"/>
@@ -27,6 +28,8 @@
     <property name="line.separator" value="&#10;"/>
     <property name="java.specification.name" value="Java Platform API Specification"/>
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
+    <property name="FILE_LOG_CHARSET" value="UTF-8"/>
+    <property name="java.awt.headless" value="true"/>
     <property name="surefire.real.class.path" value="/workspaces/Philosophy-Battle/target/surefire/surefirebooter-20260718080409889_3.jar"/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
     <property name="java.runtime.version" value="25.0.2+10-LTS"/>
@@ -41,10 +44,14 @@
     <property name="localRepository" value="/home/codespace/.m2/repository"/>
     <property name="java.vendor.url.bug" value="https://github.com/microsoft/openjdk/issues"/>
     <property name="java.io.tmpdir" value="/tmp"/>
+    <property name="catalina.home" value="/tmp/tomcat.0.1171793967111022166"/>
     <property name="java.version" value="25.0.2"/>
     <property name="user.dir" value="/workspaces/Philosophy-Battle"/>
     <property name="os.arch" value="amd64"/>
     <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
+    <property name="PID" value="25973"/>
+    <property name="CONSOLE_LOG_CHARSET" value="UTF-8"/>
+    <property name="catalina.base" value="/tmp/tomcat.0.1171793967111022166"/>
     <property name="native.encoding" value="UTF-8"/>
     <property name="java.library.path" value="/usr/java/packages/lib:/usr/lib64:/lib64:/lib:/usr/lib"/>
     <property name="java.vm.info" value="mixed mode, sharing"/>
@@ -55,9 +62,34 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="java.class.version" value="69.0"/>
   </properties>
-  <testcase name="whiteMouseCanAttackNoActionPlayer" classname="com.philosophy.SpecialAttackResolverTest" time="0.007"/>
-  <testcase name="vansamaNeedSeparateDefense" classname="com.philosophy.SpecialAttackResolverTest" time="0.004"/>
-  <testcase name="demonKingKillWithoutDefense" classname="com.philosophy.SpecialAttackResolverTest" time="0.021"/>
-  <testcase name="demonKingDieWhenTargetDefends" classname="com.philosophy.SpecialAttackResolverTest" time="0.016"/>
-  <testcase name="whiteMouseNeedDoorDefense" classname="com.philosophy.SpecialAttackResolverTest" time="0.002"/>
+  <testcase name="websocketConnectAndSubscribeTest" classname="com.philosophy.WebSocketIntegrationTest" time="0.74">
+    <system-out><![CDATA[08:04:15.358 [main] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.philosophy.WebSocketIntegrationTest]: WebSocketIntegrationTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+08:04:15.838 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.philosophy.PhilosophyApplication for test class com.philosophy.WebSocketIntegrationTest
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v3.5.0)
+
+2026-07-18T08:04:16.938Z  INFO 25973 --- [           main] c.philosophy.WebSocketIntegrationTest    : Starting WebSocketIntegrationTest using Java 25.0.2 with PID 25973 (started by codespace in /workspaces/Philosophy-Battle)
+2026-07-18T08:04:16.943Z  INFO 25973 --- [           main] c.philosophy.WebSocketIntegrationTest    : No active profile set, falling back to 1 default profile: "default"
+2026-07-18T08:04:18.512Z  INFO 25973 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 0 (http)
+2026-07-18T08:04:18.527Z  INFO 25973 --- [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-07-18T08:04:18.528Z  INFO 25973 --- [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.41]
+2026-07-18T08:04:18.576Z  INFO 25973 --- [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-07-18T08:04:18.577Z  INFO 25973 --- [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1578 ms
+2026-07-18T08:04:19.979Z  INFO 25973 --- [           main] o.s.m.s.b.SimpleBrokerMessageHandler     : Starting...
+2026-07-18T08:04:19.981Z  INFO 25973 --- [           main] o.s.m.s.b.SimpleBrokerMessageHandler     : BrokerAvailabilityEvent[available=true, SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@1e50eb3f]]
+2026-07-18T08:04:19.983Z  INFO 25973 --- [           main] o.s.m.s.b.SimpleBrokerMessageHandler     : Started.
+2026-07-18T08:04:20.004Z  INFO 25973 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 39797 (http) with context path '/'
+2026-07-18T08:04:20.019Z  INFO 25973 --- [           main] c.philosophy.WebSocketIntegrationTest    : Started WebSocketIntegrationTest in 3.847 seconds (process running for 10.015)
+2026-07-18T08:04:20.158Z  INFO 25973 --- [o-auto-1-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-07-18T08:04:20.159Z  INFO 25973 --- [o-auto-1-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-07-18T08:04:20.161Z  INFO 25973 --- [o-auto-1-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+]]></system-out>
+  </testcase>
 </testsuite>

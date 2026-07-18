@@ -32,13 +32,10 @@ public class WebSocketConfig
 
 
 
-
-
     @Override
     public void configureMessageBroker(
             MessageBrokerRegistry registry
     ){
-
 
         registry.enableSimpleBroker(
                 "/topic"
@@ -49,31 +46,27 @@ public class WebSocketConfig
                 "/app"
         );
 
-
     }
 
 
 
 
 
-
-
-
     @Override
-public void registerStompEndpoints(
-        StompEndpointRegistry registry
-){
+    public void registerStompEndpoints(
+            StompEndpointRegistry registry
+    ){
 
-    registry.addEndpoint(
-            "/ws"
-    )
-    .addInterceptors(
-            new WebSocketHandshakeInterceptor()
-    )
-    .setAllowedOriginPatterns("*");
 
-}
+        registry.addEndpoint("/ws")
 
+                .addInterceptors(
+                        interceptor
+                )
+
+                .setAllowedOriginPatterns("*");
+
+    }
 
 
 }

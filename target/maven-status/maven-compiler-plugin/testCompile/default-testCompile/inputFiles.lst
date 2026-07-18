@@ -18,6 +18,7 @@
 /workspaces/Philosophy-Battle/src/test/java/com/philosophy/IdlePlayerTest.java
 /workspaces/Philosophy-Battle/src/test/java/com/philosophy/NormalAttackResolverTest.java
 /workspaces/Philosophy-Battle/src/test/java/com/philosophy/PhilosophyResolverTest.java
+/workspaces/Philosophy-Battle/src/test/java/com/philosophy/PlayerControllerTest.java
 /workspaces/Philosophy-Battle/src/test/java/com/philosophy/PlayerJoinControllerTest.java
 /workspaces/Philosophy-Battle/src/test/java/com/philosophy/PlayerJoinTest.java
 /workspaces/Philosophy-Battle/src/test/java/com/philosophy/PlayerSessionServiceTest.java
@@ -29,4 +30,5 @@
 /workspaces/Philosophy-Battle/src/test/java/com/philosophy/SpecialAttackResolverTest.java
 /workspaces/Philosophy-Battle/src/test/java/com/philosophy/TimerServiceTest.java
 /workspaces/Philosophy-Battle/src/test/java/com/philosophy/WebSocketHandshakeTest.java
+/workspaces/Philosophy-Battle/src/test/java/com/philosophy/WebSocketIntegrationTest.java
 /workspaces/Philosophy-Battle/src/test/java/com/philosophy/WebSocketSessionLifecycleTest.java

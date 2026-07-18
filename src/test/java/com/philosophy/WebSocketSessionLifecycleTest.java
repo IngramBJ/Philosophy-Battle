@@ -3,7 +3,7 @@ package com.philosophy;
 
 import com.philosophy.service.GameBroadcastService;
 import com.philosophy.service.PlayerSessionService;
-import com.philosophy.config.WebSocketEventListener;
+import com.philosophy.websocket.WebSocketEventListener;
 
 
 import org.junit.jupiter.api.Test;
