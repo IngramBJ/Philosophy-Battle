@@ -51,7 +51,7 @@ public class RoundManagerTest {
 
 
         RoundManager manager =
-                new RoundManager(room);
+                room.getRoundManager();
 
 
 

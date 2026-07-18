@@ -5,147 +5,139 @@ import com.philosophy.model.*;
 import com.philosophy.service.GameBroadcastService;
 
 
-
 public class RoundManager {
 
 
     private final GameRoom room;
-    private final TimerService timerService;
-    private final GameBroadcastService broadcastService;
 
+    private final TimerService timerService;
+
+    private final GameBroadcastService broadcastService;
 
 
     private boolean roundStarted;
 
 
-/**
- * 原来的测试和本地调用使用
- */
-public RoundManager(
-        GameRoom room
-){
 
-    this.room = room;
+    public RoundManager(GameRoom room){
 
-    this.broadcastService = null;
+        this(
+                room,
+                null
+        );
 
-    this.roundStarted=false;
-
-    this.timerService =
-            new TimerService();
-
-            System.out.println(
-    "CREATE ROUND MANAGER:"
-    + System.identityHashCode(this)
-);
-
-}
+    }
 
 
 
-/**
- * WebSocket版本
- */
-public RoundManager(
-        GameRoom room,
-        GameBroadcastService broadcastService
-){
 
-    this.room = room;
+    public RoundManager(
+            GameRoom room,
+            GameBroadcastService broadcastService
+    ){
 
-    this.broadcastService =
-            broadcastService;
+        this.room = room;
 
-    this.roundStarted=false;
+        this.broadcastService =
+                broadcastService;
 
-    this.timerService =
-            new TimerService();
+        this.roundStarted=false;
 
-            System.out.println(
-    "CREATE ROUND MANAGER:"
-    + System.identityHashCode(this)
-);
+        this.timerService =
+                new TimerService();
 
-}
+
+        System.out.println(
+                "CREATE ROUND MANAGER:"
+                +System.identityHashCode(this)
+        );
+
+    }
+
 
 
 
 
 
     /**
-     * 开始当前回合
+     * 开始回合
      */
-    public void startRound(){
+    public synchronized void startRound(){
+
 
         System.out.println(
-    "START ROUND:"
-    +System.identityHashCode(this)
-);
+                "START ROUND:"
+                +System.identityHashCode(this)
+        );
 
 
-    if(room.getStatus()
-            != GameStatus.RUNNING){
+
+        if(room.getStatus()
+                !=GameStatus.RUNNING){
+
+            throw new IllegalStateException(
+                    "游戏未开始"
+            );
+
+        }
 
 
-        throw new IllegalStateException(
-                "游戏未开始"
+
+        resetActions();
+
+
+        roundStarted=true;
+
+
+
+        System.out.println(
+                "ROUND STARTED="
+                +roundStarted
+        );
+
+
+
+        if(broadcastService!=null){
+
+            broadcastService.broadcastState(room);
+
+        }
+
+
+    }
+
+
+
+
+
+
+
+    public void startRound(long seconds){
+
+
+        startRound();
+
+
+        timerService.startTimer(
+
+                () -> {
+
+                    if(roundStarted){
+
+                        finishRound();
+
+                    }
+
+                },
+
+                seconds
+
         );
 
     }
 
 
 
-    resetActions();
-
-
-
-    roundStarted=true;
-
-    System.out.println(
-    "ROUND STARTED="
-    +roundStarted
-);
-
-    if(broadcastService != null){
-
-    broadcastService.broadcastState(room);
-
-}
-
-
-}
-
-    public void startRound(
-        long seconds
-){
-
-    if(room.getStatus()
-            != GameStatus.RUNNING){
-
-
-        throw new IllegalStateException(
-                "游戏未开始"
-        );
-
-    }
-
-    resetActions();
-
-    roundStarted=true;
-
-
-
-    timerService.startTimer(
-            () -> {
-
-                finishRound();
-
-            },
-            seconds
-    );
-
-
-}
 
 
 
@@ -154,139 +146,186 @@ public RoundManager(
     /**
      * 玩家提交行动
      */
-public synchronized void submitAction(
-        Player player,
-        Action action
-){
+    public synchronized void submitAction(
 
-    System.out.println(
-    "SUBMIT ROUND:"
-    +System.identityHashCode(this)
-    +" STARTED="
-    +roundStarted
-);
+            Player player,
+
+            Action action
+
+    ){
 
 
+        System.out.println(
+                "SUBMIT ROUND:"
+                +System.identityHashCode(this)
+                +" STARTED="
+                +roundStarted
+        );
 
-    if(!roundStarted){
 
-        throw new IllegalStateException(
-                "当前没有进行中的回合"
+
+        if(!roundStarted){
+
+            throw new IllegalStateException(
+                    "当前没有进行中的回合"
+            );
+
+        }
+
+
+
+        player.setCurrentAction(action);
+
+
+
+if(allPlayersSubmitted()){
+
+
+    finishRound();
+
+
+}
+else{
+
+
+    if(broadcastService != null){
+
+        broadcastService.broadcastEvent(
+
+                room.getRoomId(),
+
+                "ACTION_SUBMIT",
+
+                java.util.Map.of(
+
+                    "playerId",
+                    player.getId(),
+
+                    "action",
+                    action.getType().name()
+
+                )
+
         );
 
     }
 
-
-
-    player.setCurrentAction(action);
-
-    if(broadcastService != null){
-
-    broadcastService.broadcastState(room);
-
 }
 
 
 
-    /*
-     * 所有人提交完成
-     * 自动进入结算
-     */
-    if(allPlayersSubmitted()){
 
 
-        finishRound();
+
+        if(allPlayersSubmitted()){
+
+
+            System.out.println(
+                    "ALL PLAYERS SUBMITTED"
+            );
+
+
+            finishRound();
+
+
+        }
 
 
     }
 
 
-}
+
+
 
 
 
 
 
     /**
-     * 结束回合并结算
+     * 结束回合
      */
 public synchronized RoundResult finishRound(){
 
 
     System.out.println(
-        "========== FINISH ROUND =========="
+            "========== FINISH ROUND =========="
     );
 
 
     if(!roundStarted){
 
-        throw new IllegalStateException(
-                "当前没有进行中的回合"
-        );
+        return null;
 
     }
 
 
+
+    /*
+     防止重复提交触发两次
+     */
     roundStarted=false;
+
+
+
+    int finishedRound =
+            room.getRound();
+
 
 
     RoundResult result =
             room.nextRound();
 
 
+
     System.out.println(
-        "ROUND RESULT="
-        +result
+            "ROUND RESULT="
+            +result
     );
 
 
-    if(result!=null){
 
-        System.out.println(
-            "LOGS="
-            +result.getLogs()
+    if(broadcastService != null){
+
+
+        /*
+         先发送结果
+         */
+        broadcastService.broadcastEvent(
+
+                room.getRoomId(),
+
+                "ROUND_RESULT",
+
+                java.util.Map.of(
+
+                        "round",
+                        finishedRound,
+
+                        "message",
+                        "ROUND_FINISHED"
+
+                )
+
         );
+
+
+
+        /*
+         再发送状态
+         */
+        broadcastService.broadcastState(room);
+
 
     }
 
 
 
-if(broadcastService != null){
-
-
-    System.out.println(
-        "SEND ROUND RESULT"
-    );
-
-
-    broadcastService.broadcastEvent(
-
-            room.getRoomId(),
-
-            "ROUND_RESULT",
-
-            java.util.Map.of(
-
-                    "round",
-                    room.getRound(),
-
-                    "message",
-"ROUND_FINISHED"
-
-            )
-
-    );
-
-
-    broadcastService.broadcastState(room);
-
-
-}
-
-
     return result;
 
 }
+
+
+
 
 
 
@@ -298,47 +337,79 @@ if(broadcastService != null){
 
     }
 
+
+
+
+
+
+
+
     private void resetActions(){
 
 
-    for(Player player:
-            room.getGameState()
-                    .getAlivePlayers()){
+        for(Player player:
+
+                room.getGameState()
+                        .getAlivePlayers()){
 
 
-        player.clearAction();
+            player.clearAction();
 
-    }
-
-}
-
-private boolean allPlayersSubmitted(){
-
-    for(Player player:
-            room.getGameState()
-                    .getPlayers()){
-
-        System.out.println(
-            "CHECK PLAYER:"
-            +player.getId()
-            +" ACTION="
-            +player.getCurrentAction()
-        );
-
-
-        if(player.isAlive()
-                && player.getCurrentAction()==null){
-
-            return false;
 
         }
 
+
     }
 
 
-    return true;
 
-}
+
+
+
+
+
+
+    private boolean allPlayersSubmitted(){
+
+
+
+        for(Player player:
+
+                room.getGameState()
+                        .getPlayers()){
+
+
+
+            System.out.println(
+
+                    "CHECK PLAYER:"
+                    +player.getId()
+                    +" ACTION="
+                    +player.getCurrentAction()
+
+            );
+
+
+
+            if(player.isAlive()
+
+                    &&player.getCurrentAction()==null){
+
+
+                return false;
+
+
+            }
+
+        }
+
+
+
+        return true;
+
+
+    }
+
 
 
 }

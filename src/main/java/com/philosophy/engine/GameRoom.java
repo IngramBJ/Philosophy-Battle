@@ -139,30 +139,50 @@ public class GameRoom {
     public void startGame(){
 
 
-        if(gameState.getPlayers().size()<2){
+    if(gameState.getPlayers().size()<2){
 
-            throw new IllegalStateException(
-                    "至少需要两个玩家"
-            );
+        throw new IllegalStateException(
+                "至少需要两个玩家"
+        );
 
-        }
-
-
-
-        status =
-                GameStatus.RUNNING;
+    }
 
 
+    status =
+            GameStatus.RUNNING;
 
-        round =
-                1;
+
+    round = 1;
 
 
 
-        roundManager.startRound();
+    if(broadcastService != null){
+
+
+        broadcastService.broadcastEvent(
+
+                roomId,
+
+                "GAME_START",
+
+                java.util.Map.of(
+
+                        "round",
+                        round
+
+                )
+
+        );
 
 
     }
+
+
+
+    roundManager.startRound();
+
+
+}
 
 
 
