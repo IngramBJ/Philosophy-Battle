@@ -4,8 +4,12 @@
 /workspaces/Philosophy-Battle/src/test/java/com/philosophy/ActionValidatorTest.java
 /workspaces/Philosophy-Battle/src/test/java/com/philosophy/ActionWebSocketControllerTest.java
 /workspaces/Philosophy-Battle/src/test/java/com/philosophy/AutoNextRoundTest.java
+/workspaces/Philosophy-Battle/src/test/java/com/philosophy/BattleEngineFlowTest.java
+/workspaces/Philosophy-Battle/src/test/java/com/philosophy/BattleEngineResolverTest.java
 /workspaces/Philosophy-Battle/src/test/java/com/philosophy/BattleEngineTest.java
+/workspaces/Philosophy-Battle/src/test/java/com/philosophy/DeadPlayerRoundTest.java
 /workspaces/Philosophy-Battle/src/test/java/com/philosophy/DefenseResolverTest.java
+/workspaces/Philosophy-Battle/src/test/java/com/philosophy/DuplicateActionSubmitTest.java
 /workspaces/Philosophy-Battle/src/test/java/com/philosophy/FullBattleRoundFlowTest.java
 /workspaces/Philosophy-Battle/src/test/java/com/philosophy/FullGameFlowTest.java
 /workspaces/Philosophy-Battle/src/test/java/com/philosophy/GameBroadcastEventTest.java
@@ -18,6 +22,7 @@
 /workspaces/Philosophy-Battle/src/test/java/com/philosophy/GameStartTest.java
 /workspaces/Philosophy-Battle/src/test/java/com/philosophy/GameStateBroadcastTest.java
 /workspaces/Philosophy-Battle/src/test/java/com/philosophy/IdlePlayerTest.java
+/workspaces/Philosophy-Battle/src/test/java/com/philosophy/MultiRoundFlowTest.java
 /workspaces/Philosophy-Battle/src/test/java/com/philosophy/NormalAttackResolverTest.java
 /workspaces/Philosophy-Battle/src/test/java/com/philosophy/PhilosophyResolverTest.java
 /workspaces/Philosophy-Battle/src/test/java/com/philosophy/PlayerControllerTest.java
