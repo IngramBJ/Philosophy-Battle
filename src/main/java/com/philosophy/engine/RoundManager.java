@@ -233,6 +233,13 @@ public synchronized RoundResult finishRound(){
     RoundResult result =
             room.nextRound();
 
+    // 自动开始下一回合
+if(room.getStatus()==GameStatus.RUNNING){
+
+    startRound();
+
+}
+
 
     System.out.println(
         "ROUND RESULT="

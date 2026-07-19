@@ -65,9 +65,7 @@ GameBroadcastService broadcastService =
 
                         manager,
 
-                        new GameBroadcastService(
-                                null, null
-                        )
+                        broadcastService
 
                 );
 
@@ -196,9 +194,7 @@ GameBroadcastService broadcastService =
 
                         manager,
 
-                        new GameBroadcastService(
-                                null, null
-                        )
+                        broadcastService
 
                 );
 

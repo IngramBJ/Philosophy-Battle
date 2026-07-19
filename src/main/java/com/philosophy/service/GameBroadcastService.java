@@ -22,17 +22,11 @@ import java.util.concurrent.ConcurrentHashMap;
 public class GameBroadcastService {
 
 
-
     private final SimpMessagingTemplate template;
-
-
 
     private final Map<String,Map<Integer,String>> sessions;
 
     private final ObjectMapper mapper;
-
-
-
 
 
     public GameBroadcastService(
@@ -40,54 +34,60 @@ public class GameBroadcastService {
             ObjectMapper mapper
     ){
 
-        this.template =
-                template;
+        this.template = template;
+
+        this.mapper =
+                mapper != null
+                ? mapper
+                : new ObjectMapper();
 
 
         this.sessions =
                 new ConcurrentHashMap<>();
 
-        this.mapper =
-                mapper;
-
     }
 
 
 
-
-
-
-    /**
-     * 普通广播
-     */
     public void broadcast(
-        String roomId,
-        Object message
-){
+            String roomId,
+            Object message
+    ){
 
 
-    try{
+        try{
 
-        System.out.println(
+            System.out.println(
                 "WS SEND JSON="
                 +mapper.writeValueAsString(message)
+            );
+
+
+        }catch(Exception e){
+
+            e.printStackTrace();
+
+        }
+
+
+
+        // 测试环境没有WebSocket
+        if(template == null){
+
+            return;
+
+        }
+
+
+        template.convertAndSend(
+                "/topic/room/"+roomId,
+                message
         );
 
 
-    }catch(Exception e){
-
-        e.printStackTrace();
-
     }
 
 
-
-    template.convertAndSend(
-            "/topic/room/"+roomId,
-            message
-    );
-
-}
 
 
 
